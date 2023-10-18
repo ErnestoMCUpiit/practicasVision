@@ -75,3 +75,14 @@ for i in range(len(guardar)):
 
 print(guardar)
 print(firstDnormal)
+
+guardar = conectividad(imagen, conectividad=8, umbral_min=80, umbral_max=130, iteraciones_erosion=20, rotate=True)
+
+firstDrotada = []
+for i in range(len(guardar)):
+    # Calcula la primera diferencia
+    primera_diferencia = (guardar[i] - guardar[i - 1]) % 4
+    firstDrotada.append(primera_diferencia)
+
+print(guardar)
+print(firstDrotada)
