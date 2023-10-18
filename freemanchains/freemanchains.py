@@ -30,3 +30,34 @@ def conectividad(imagen_path, conectividad=8, umbral_min=80, umbral_max=130, ite
             (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)
         ]
         direc = [0, 1, 2, 7, 3, 6, 5, 4]
+        actualp = stpunto
+    guardar = []
+    direccionactual = 0
+    while True:
+        for i in range(len(direc)):
+            newdirec = (direccionactual + i) % len(direc)
+            newp = (actualp[0] + move[newdirec][0], actualp[1] + move[newdirec][1])
+            if 0 <= newp[0] < morfo.shape[0] and 0 <= newp[1] < morfo.shape[1] and morfo[newp[0], newp[1]] > 0:
+                guardar.append(newdirec)
+                actualp = newp
+                direccionactual = newdirec
+                break
+
+        if actualp == stpunto:
+            break
+
+    fig, ax = plt.subplots()
+    ax.imshow(morfo, cmap='Greys')
+
+    x, y = stpunto[1], stpunto[0]
+    for direc in guardar:
+        move = [
+            (0, 1), (1, 1), (1, 0), (1, -1), (0, -1), (-1, -1), (-1, 0), (-1, 1)
+        ][direc]
+        x += move[1]
+        y += move[0]
+        ax.plot(x, y, 'ro')
+
+    ax.plot(stpunto[1], stpunto[0], 'go')
+    plt.show()
+    return guardar
